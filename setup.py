@@ -6,8 +6,8 @@ setup(
     description='A simple vector mathematics module',
     author='Gavin Jones',
     authore_email='gav.j.jones@googlemail.com',
-    url='',
-    download_url='',
+    url='https://github.com/Kaundur/pyclid',
+    download_url='https://github.com/Kaundur/pyclid/tarball/0.1',
     keywords=['Vector', 'Euclid'],
     classifiers=[],
 )
