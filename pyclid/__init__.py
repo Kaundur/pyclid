@@ -45,7 +45,7 @@ class Vec2:
 
     def dot(self, other):
         assert isinstance(other, Vec2), 'Requires a Vec2'
-        return self.x * other.x + self.y * other.y
+        return self.x*other.x + self.y*other.y
 
     def angle(self, other):
         assert isinstance(other, Vec2), 'Requires a Vec2'
@@ -98,18 +98,19 @@ class Vec3:
             self.z /= mag
         return self
 
-    # TODO - Requires more work, very different to cross of 2x2
-    # def cross(self, other):
-    #     assert isinstance(other, Vec3), 'Requires a Vec3'
-    #     return self.x*other.y - self.y*other.x
+    def cross(self, other):
+        assert isinstance(other, Vec3), 'Requires a Vec3'
+        return Vec3((self.y*other.z - other.y*self.z),
+                    -(self.x*other.z - other.x*self.z),
+                    (self.x*other.y - other.x*self.y))
 
     def dot(self, other):
         assert isinstance(other, Vec2), 'Requires a Vec3'
-        return self.x * other.x + self.y * other.y + self.z * other.z
+        return self.x*other.x + self.y*other.y + self.z*other.z
 
     def angle(self, other):
         assert isinstance(other, Vec2), 'Requires a Vec3'
-        return math.acos(self.dot(other)/(self.magnitude() * other.magnitude()))
+        return math.acos(self.dot(other)/(self.magnitude()*other.magnitude()))
 
     def mid_point(self, other):
         assert isinstance(other, Vec2), 'Requires a Vec3'
