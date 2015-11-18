@@ -32,6 +32,9 @@ class Vec2:
         self.y /= other
         return self
 
+    def distance_between(self, other):
+        return math.sqrt((self.x-other.x)**2 + (self.y-other.y)**2)
+
     def magnitude(self):
         return self.__abs__()
 
@@ -69,7 +72,7 @@ class Vec2:
         vec_x = om[0]*self.x + om[1]*self.y + om[2]
         vec_y = om[3]*self.x + om[4]*self.y + om[5]
         # Ignore the last calculation here, as 3rd position should be w not z
-        #new_vec.append(sm[6]*other[0] + sm[7]*other[1] + sm[8])
+        # new_vec.append(sm[6]*other[0] + sm[7]*other[1] + sm[8])
 
         return Vec2(vec_x, vec_y)
 
@@ -107,6 +110,9 @@ class Vec3:
         self.y /= other
         self.z /= other
         return self
+
+    def distance_between(self, other):
+        return math.sqrt((self.x-other.x)**2 + (self.y-other.y)**2 + (self.z-other.z)**2)
 
     def magnitude(self):
         return self.__abs__()
@@ -148,7 +154,7 @@ class Vec3:
         return self.cross(other.cross(other2))
 
 
-# rotate inverse translate det, reflect
+#  inverse, det, reflect
 class Mat2:
     """ Creates a 2x2 matrix
 
@@ -250,8 +256,6 @@ class Mat2:
         """
         self.__matrix[1], self.__matrix[2] = self.__matrix[2], self.__matrix[1]
         return self
-
-
 
 
 class Mat3:
@@ -450,4 +454,3 @@ class Mat3:
         mat.set_value(sin_angle, 3)
         mat.set_value(cos_angle, 4)
         return mat
-
