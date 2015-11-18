@@ -76,6 +76,11 @@ class Vec2:
 
         return Vec2(vec_x, vec_y)
 
+    def zero(self):
+        self.x = 0
+        self.y = 0
+        return self
+
 
 class Vec3:
     def __init__(self, x=0, y=0, z=0):
@@ -153,6 +158,11 @@ class Vec3:
         assert isinstance(other2, Vec3), 'Requires all inputs to be Vec3'
         return self.cross(other.cross(other2))
 
+    def zero(self):
+        self.x = 0
+        self.y = 0
+        self.z = 0
+        return self
 
 #  inverse, det, reflect
 class Mat2:
