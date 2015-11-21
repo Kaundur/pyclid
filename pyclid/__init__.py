@@ -32,6 +32,14 @@ class Vec2:
         self.y /= other
         return self
 
+    def __eq__(self, other):
+        assert isinstance(other, Vec2), 'Requires a Vec2'
+        return self.x == other.x and self.y == other.y
+
+    def __ne__(self, other):
+        assert isinstance(other, Vec2), 'Requires a Vec2'
+        return not self.__eq__(other)
+
     def distance_between(self, other):
         return math.sqrt((self.x-other.x)**2 + (self.y-other.y)**2)
 
@@ -115,6 +123,14 @@ class Vec3:
         self.y /= other
         self.z /= other
         return self
+
+    def __eq__(self, other):
+        assert isinstance(other, Vec3), 'Requires a Vec3'
+        return self.x == other.x and self.y == other.y and self.z == other.z
+
+    def __ne__(self, other):
+        assert isinstance(other, Vec3), 'Requires a Vec3'
+        return not self.__eq__(other)
 
     def distance_between(self, other):
         return math.sqrt((self.x-other.x)**2 + (self.y-other.y)**2 + (self.z-other.z)**2)
