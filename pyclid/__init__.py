@@ -70,19 +70,19 @@ class Vec2:
         return Vec2((self.x + other.x)/2.0, (self.y + other.y)/2.0)
 
     def rotate(self, other):
-        assert isinstance(other, Mat3), 'Requires a rotation matrix'
-        om = other.matrix
+        assert isinstance(other, (int, float, long, Mat2)), 'Requires a rotation matrix or an angle'
 
-        # 0, 1, 2     0
-        # 3, 4, 5 ->  1
-        # 6, 7, 8     N
+        if isinstance(other, Mat2):
+            om = other.matrix
+            vec_x = om[0]*self.x + om[1]*self.y
+            vec_y = om[2]*self.x + om[3]*self.y
+        else:
+            vec_x = math.cos(other)*self.x - math.sin(other)*self.y
+            vec_y = math.sin(other)*self.x + math.cos(other)*self.y
 
-        vec_x = om[0]*self.x + om[1]*self.y + om[2]
-        vec_y = om[3]*self.x + om[4]*self.y + om[5]
-        # Ignore the last calculation here, as 3rd position should be w not z
-        # new_vec.append(sm[6]*other[0] + sm[7]*other[1] + sm[8])
-
-        return Vec2(vec_x, vec_y)
+        self.x = vec_x
+        self.y = vec_y
+        return self
 
     def zero(self):
         self.x = 0
@@ -179,6 +179,18 @@ class Vec3:
         self.y = 0
         self.z = 0
         return self
+
+
+class Vec4:
+    def __init__(self, x=0, y=0, z=0, w=0):
+        self.x = x
+        self.y = y
+        self.z = z
+        self.w = w
+
+    def __str__(self):
+        return '[' + str(self.x) + ', ' + str(self.y) + ', ' + str(self.z) + ', ' + str(self.w) + ']'
+
 
 #  inverse, det, reflect
 class Mat2:
@@ -282,6 +294,21 @@ class Mat2:
         """
         self.__matrix[1], self.__matrix[2] = self.__matrix[2], self.__matrix[1]
         return self
+
+    def rotate(self, angle):
+        rotation_matrix = self.__rotation_matrix(angle)
+        self *= rotation_matrix
+        return self
+
+    def __rotation_matrix(self, angle):
+        mat = Mat2([]).load_identity()
+        sin_angle = math.sin(angle)
+        cos_angle = math.cos(angle)
+        mat.set_value(cos_angle, 0)
+        mat.set_value(-sin_angle, 1)
+        mat.set_value(sin_angle, 2)
+        mat.set_value(cos_angle, 3)
+        return mat
 
 
 class Mat3:
@@ -479,4 +506,200 @@ class Mat3:
         mat.set_value(-sin_angle, 1)
         mat.set_value(sin_angle, 3)
         mat.set_value(cos_angle, 4)
+        return mat
+
+
+
+class Mat4:
+    """ Creates a 4x4 matrix
+
+        | 0,  1,  2,  3|
+        | 4,  5,  6,  7|
+        | 8,  9, 10, 11|
+        |12, 13, 14, 15|
+
+    """
+
+    def __init__(self, mat):
+        assert isinstance(mat, list) and len(mat) <= 16, 'Requires input to be a list and len <= 16'
+        self.__matrix = []
+        self.__x_size = 4
+        self.__y_size = 4
+        self.size = 16
+
+        # Initialise the matrix to zero
+        for i in xrange(self.size):
+            self.__matrix.append(0)
+        self.__input_matrix_values(mat)
+
+    def __mul__(self, other):
+        assert isinstance(other, (int, float, long, Mat4, Vec4)), 'Requires an int, float, long, Vec4 or Mat4'
+        if isinstance(other, Mat4):
+            new_matrix = []
+            sm = self.__matrix
+            om = other.__matrix
+
+            # | 0,  1,  2,  3|              # | 0,  1,  2,  3|
+            # | 4,  5,  6,  7|              # | 4,  5,  6,  7|
+            # | 8,  9, 10, 11|              # | 8,  9, 10, 11|
+            # |12, 13, 14, 15|              # |12, 13, 14, 15|
+
+            new_matrix.append(sm[0]*om[0] + sm[1]*om[4] + sm[2]*om[8] + sm[3]*om[12])
+            new_matrix.append(sm[0]*om[1] + sm[1]*om[5] + sm[2]*om[9] + sm[3]*om[13])
+            new_matrix.append(sm[0]*om[2] + sm[1]*om[6] + sm[2]*om[10] + sm[3]*om[14])
+            new_matrix.append(sm[0]*om[3] + sm[1]*om[7] + sm[2]*om[11] + sm[3]*om[15])
+
+            new_matrix.append(sm[4]*om[0] + sm[5]*om[4] + sm[6]*om[8] + sm[7]*om[12])
+            new_matrix.append(sm[4]*om[1] + sm[5]*om[5] + sm[6]*om[9] + sm[7]*om[13])
+            new_matrix.append(sm[4]*om[2] + sm[5]*om[6] + sm[6]*om[10] + sm[7]*om[14])
+            new_matrix.append(sm[4]*om[3] + sm[5]*om[7] + sm[6]*om[11] + sm[7]*om[15])
+
+            new_matrix.append(sm[8]*om[0] + sm[9]*om[4] + sm[10]*om[8] + sm[11]*om[12])
+            new_matrix.append(sm[8]*om[1] + sm[9]*om[5] + sm[10]*om[9] + sm[11]*om[13])
+            new_matrix.append(sm[8]*om[2] + sm[9]*om[6] + sm[10]*om[10] + sm[11]*om[14])
+            new_matrix.append(sm[8]*om[3] + sm[9]*om[7] + sm[10]*om[11] + sm[11]*om[15])
+
+            new_matrix.append(sm[12]*om[0] + sm[13]*om[4] + sm[14]*om[8] + sm[15]*om[12])
+            new_matrix.append(sm[12]*om[1] + sm[13]*om[5] + sm[14]*om[9] + sm[15]*om[13])
+            new_matrix.append(sm[12]*om[2] + sm[13]*om[6] + sm[14]*om[10] + sm[15]*om[14])
+            new_matrix.append(sm[12]*om[3] + sm[13]*om[7] + sm[14]*om[11] + sm[15]*om[15])
+
+            return Mat4(new_matrix)
+
+        else:
+            # v = [self.__matrix[0]*other.x + self.__matrix[1]*other.y + self.__matrix[2]*other.z + self.__matrix[3]*other.w,
+            #     self.__matrix[4]*other.x + self.__matrix[5]*other.y + self.__matrix[6]*other.z + self.__matrix[7]*other.w,
+            #     self.__matrix[8]*other.x + self.__matrix[9]*other.y + self.__matrix[10]*other.z + self.__matrix[11]*other.w,
+            #     self.__matrix[12]*other.x + self.__matrix[13]*other.y + self.__matrix[14]*other.z + self.__matrix[15]*other.w]
+
+            v = [self.__matrix[0]*other.x + self.__matrix[4]*other.y + self.__matrix[8]*other.z + self.__matrix[12]*other.w,
+                self.__matrix[1]*other.x + self.__matrix[5]*other.y + self.__matrix[9]*other.z + self.__matrix[13]*other.w,
+                self.__matrix[2]*other.x + self.__matrix[6]*other.y + self.__matrix[10]*other.z + self.__matrix[14]*other.w,
+                self.__matrix[3]*other.x + self.__matrix[7]*other.y + self.__matrix[11]*other.z + self.__matrix[15]*other.w]
+            return Vec4(v[0], v[1], v[2], v[3])
+
+    def __str__(self):
+        max_size = 0
+        for i in self.__matrix:
+            if len(str(i)) > max_size:
+                max_size = len(str(i))
+
+        str_out = ''
+        for j in range(self.__y_size):
+            str_out += '| '
+            for i in range(self.__x_size):
+                str_out += str('{:>'+str(max_size)+'}').format(str(self.__matrix[i+(j*self.__x_size)])) + ' '
+
+            str_out += "|\n"
+        return str_out
+
+
+    @property
+    def matrix(self):
+        return self.__matrix
+
+    def __input_matrix_values(self, values):
+        for i, element in enumerate(values):
+            self.__matrix[i] = element
+
+    def load_identity(self):
+        self.__matrix[0] = 1
+        self.__matrix[1] = 0
+        self.__matrix[2] = 0
+        self.__matrix[3] = 0
+
+        self.__matrix[4] = 0
+        self.__matrix[5] = 1
+        self.__matrix[6] = 0
+        self.__matrix[7] = 0
+
+        self.__matrix[8] = 0
+        self.__matrix[9] = 0
+        self.__matrix[10] = 1
+        self.__matrix[11] = 0
+
+        self.__matrix[12] = 0
+        self.__matrix[13] = 0
+        self.__matrix[14] = 0
+        self.__matrix[15] = 1
+
+        return self
+
+    def load_zero(self):
+        for i in range(self.size):
+            self.__matrix[i] = 0
+        return self
+
+    # TODO - Set value should be setter for the matrix
+    # TODO - Reverse order, it makes more sense to have index then value like an array a[index] = value
+    def set_value(self, value, position):
+        # Can take in a 1d position or 2d position
+        coord = position
+        if isinstance(position, list) and len(position) == 2:
+            coord = self.convert_2d(position[0], position[1])
+        self.__matrix[coord] = value
+
+    # TODO - Multiple axis
+    def rotate_x(self, angle):
+        rotation_matrix = self.__rotation_matrix_x(angle)
+        self *= rotation_matrix
+
+        return self
+
+    def rotate_y(self, angle):
+        rotation_matrix = self.__rotation_matrix_y(angle)
+        self *= rotation_matrix
+        return self
+
+    def rotate_z(self, angle):
+        rotation_matrix = self.__rotation_matrix_z(angle)
+        self *= rotation_matrix
+        return self
+
+    def translate(self, x, y, z):
+        # self.__matrix[3] -= x
+        # self.__matrix[7] -= y
+        # self.__matrix[11] -= z
+
+        self.__matrix[12] -= x
+        self.__matrix[13] -= y
+        self.__matrix[14] -= z
+
+        return self
+
+    def __rotation_matrix_x(self, angle):
+        mat = Mat4([]).load_identity()
+        sin_angle = math.sin(angle)
+        cos_angle = math.cos(angle)
+        # mat.set_value(cos_angle, 5)
+        # mat.set_value(-sin_angle, 6)
+        # mat.set_value(sin_angle, 9)
+        # mat.set_value(cos_angle, 10)
+        mat.set_value(cos_angle, 5)
+        mat.set_value(sin_angle, 6)
+        mat.set_value(-sin_angle, 9)
+        mat.set_value(cos_angle, 10)
+        mat.set_value(0, 15)
+        return mat
+
+    def __rotation_matrix_y(self, angle):
+        mat = Mat4([]).load_identity()
+        sin_angle = math.sin(angle)
+        cos_angle = math.cos(angle)
+        mat.set_value(cos_angle, 0)
+        mat.set_value(-sin_angle, 2)
+        mat.set_value(sin_angle, 8)
+        mat.set_value(cos_angle, 10)
+        mat.set_value(0, 15)
+        return mat
+
+    def __rotation_matrix_z(self, angle):
+        mat = Mat4([]).load_identity()
+        sin_angle = math.sin(angle)
+        cos_angle = math.cos(angle)
+        mat.set_value(cos_angle, 0)
+        mat.set_value(sin_angle, 1)
+        mat.set_value(-sin_angle, 4)
+        mat.set_value(cos_angle, 5)
+        mat.set_value(0, 15)
         return mat
