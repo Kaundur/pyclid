@@ -84,6 +84,19 @@ class Vec2:
         self.y = vec_y
         return self
 
+    def set_rotation(self, other):
+        assert isinstance(other, (int, float, long)), 'Requires an int float or long'
+        vec_x = math.cos(other)*self.x - math.sin(other)*self.y
+        vec_y = math.sin(other)*self.x + math.cos(other)*self.y
+
+
+        vec_x = math.cos(other)
+        vec_y = math.sin(other)
+
+        self.x = vec_x
+        self.y = vec_y
+
+
     def zero(self):
         self.x = 0
         self.y = 0
