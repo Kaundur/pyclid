@@ -26,6 +26,9 @@ class Vec2:
         self.y *= other
         return self
 
+    def __rmul__(self, other):
+        return self.__mul__(other)
+
     def __div__(self, other):
         assert isinstance(other, (int, float, long)), 'Requires a int, float or long'
         self.x /= other
@@ -130,6 +133,9 @@ class Vec3:
         self.z *= other
         return self
 
+    def __rmul__(self, other):
+        return self.__rmul__(other)
+
     def __div__(self, other):
         assert isinstance(other, (int, float, long)), 'Requires a int, float or long'
         self.x /= other
@@ -205,7 +211,7 @@ class Vec4:
         return '[' + str(self.x) + ', ' + str(self.y) + ', ' + str(self.z) + ', ' + str(self.w) + ']'
 
 
-#  inverse, det, reflect
+
 class Mat2:
     """ Creates a 2x2 matrix
 
@@ -257,6 +263,9 @@ class Mat2:
         else:
             self.__matrix = [i*other for i in self.__matrix]
             return self
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
 
     def __div__(self, other):
         assert isinstance(other, (int, float, long)), 'Requires a int, float or long'
@@ -384,6 +393,9 @@ class Mat3:
         else:
             self.__matrix = [i*other for i in self.__matrix]
             return self
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
 
     def __div__(self, other):
         assert isinstance(other, (int, float, long)), 'Requires a int, float or long'
@@ -580,16 +592,20 @@ class Mat4:
             return Mat4(new_matrix)
 
         else:
-            # v = [self.__matrix[0]*other.x + self.__matrix[1]*other.y + self.__matrix[2]*other.z + self.__matrix[3]*other.w,
-            #     self.__matrix[4]*other.x + self.__matrix[5]*other.y + self.__matrix[6]*other.z + self.__matrix[7]*other.w,
-            #     self.__matrix[8]*other.x + self.__matrix[9]*other.y + self.__matrix[10]*other.z + self.__matrix[11]*other.w,
-            #     self.__matrix[12]*other.x + self.__matrix[13]*other.y + self.__matrix[14]*other.z + self.__matrix[15]*other.w]
+            v = [self.__matrix[0]*other.x + self.__matrix[1]*other.y + self.__matrix[2]*other.z + self.__matrix[3]*other.w,
+                self.__matrix[4]*other.x + self.__matrix[5]*other.y + self.__matrix[6]*other.z + self.__matrix[7]*other.w,
+                self.__matrix[8]*other.x + self.__matrix[9]*other.y + self.__matrix[10]*other.z + self.__matrix[11]*other.w,
+                self.__matrix[12]*other.x + self.__matrix[13]*other.y + self.__matrix[14]*other.z + self.__matrix[15]*other.w]
 
-            v = [self.__matrix[0]*other.x + self.__matrix[4]*other.y + self.__matrix[8]*other.z + self.__matrix[12]*other.w,
-                self.__matrix[1]*other.x + self.__matrix[5]*other.y + self.__matrix[9]*other.z + self.__matrix[13]*other.w,
-                self.__matrix[2]*other.x + self.__matrix[6]*other.y + self.__matrix[10]*other.z + self.__matrix[14]*other.w,
-                self.__matrix[3]*other.x + self.__matrix[7]*other.y + self.__matrix[11]*other.z + self.__matrix[15]*other.w]
+            # v = [self.__matrix[0]*other.x + self.__matrix[4]*other.y + self.__matrix[8]*other.z + self.__matrix[12]*other.w,
+            #     self.__matrix[1]*other.x + self.__matrix[5]*other.y + self.__matrix[9]*other.z + self.__matrix[13]*other.w,
+            #     self.__matrix[2]*other.x + self.__matrix[6]*other.y + self.__matrix[10]*other.z + self.__matrix[14]*other.w,
+            #     self.__matrix[3]*other.x + self.__matrix[7]*other.y + self.__matrix[11]*other.z + self.__matrix[15]*other.w]
             return Vec4(v[0], v[1], v[2], v[3])
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
+
 
     def __str__(self):
         max_size = 0
@@ -670,13 +686,13 @@ class Mat4:
         return self
 
     def translate(self, x, y, z):
-        # self.__matrix[3] -= x
-        # self.__matrix[7] -= y
-        # self.__matrix[11] -= z
+        self.__matrix[3] -= x
+        self.__matrix[7] -= y
+        self.__matrix[11] -= z
 
-        self.__matrix[12] -= x
-        self.__matrix[13] -= y
-        self.__matrix[14] -= z
+        # self.__matrix[12] -= x
+        # self.__matrix[13] -= y
+        # self.__matrix[14] -= z
 
         return self
 
