@@ -6,6 +6,9 @@ class Vec2:
         self.x = x
         self.y = y
 
+    def __len__(self):
+        return 2
+
     def __str__(self):
         return '[' + str(self.x) + ', ' + str(self.y) + ']'
 
@@ -112,6 +115,9 @@ class Vec3:
         self.y = y
         self.z = z
 
+    def __len__(self):
+        return 3
+
     def __str__(self):
         return '[' + str(self.x) + ', ' + str(self.y) + ', ' + str(self.z) + ']'
 
@@ -206,6 +212,9 @@ class Vec4:
         self.y = y
         self.z = z
         self.w = w
+
+    def __len__(self):
+        return 4
 
     def __str__(self):
         return '[' + str(self.x) + ', ' + str(self.y) + ', ' + str(self.z) + ', ' + str(self.w) + ']'
