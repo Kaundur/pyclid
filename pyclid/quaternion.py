@@ -1,12 +1,13 @@
 import vector
+import matrix
 
 
 class Quat:
-    def __init__(self):
-        self.q0 = 0
-        self.q1 = 0
-        self.q2 = 0
-        self.q3 = 0
+    def __init__(self, q0=0, q1=0, q2=0, q3=0):
+        self.q0 = q0
+        self.q1 = q1
+        self.q2 = q2
+        self.q3 = q3
 
     def __eq__(self, other):
         assert isinstance(other, Quat), 'Cannot call eq on a non-Quaternion'
@@ -30,17 +31,25 @@ class Quat:
         assert isinstance(other, (Quat, int, float, long)), 'Cannot call multiplication on non-Quaternion or non-number'
 
         if isinstance(other, Quat):
-            pass
-            #can write this in matrix form
-
+            # In matrix form
+            # Self
             # p0, -p1, -p2, -p3
             # p1, p0, -p3, p2
             # p2, p3, p0, -p1
             # p3, -p2, p1, p0
 
             # multiply by
+            # Other
+            # q0, q1, q2, q3
 
-            #q0, q1, q2, q3
+            mat = matrix.Mat4([self.q0, -self.q1, -self.q2, -self.q3,
+                               self.q1,  self.q0, -self.q3,  self.q2,
+                               self.q2,  self.q3,  self.q0, -self.q1,
+                               self.q3, -self.q2,  self.q1,  self.q0])
+            vec = vector.Vec4(other.q0, other.q1, other.q2, other.q3)
+
+            quat = mat*vec
+            return Quat(quat.x, quat.y, quat.z, quat.w)
 
         else:
             self.q0 *= other

@@ -15,10 +15,11 @@ class Mat2:
         self.__matrix = []
         self.x_size = 2
         self.y_size = 2
-        self.size = 9
+        self.size = 4
 
         # Initialise the matrix to zero
-        self.load_zero()
+        for i in xrange(self.size):
+            self.__matrix.append(0)
         self.__input_matrix_values(mat)
 
     def __str__(self):
@@ -158,7 +159,8 @@ class Mat3:
         self.size = 9
 
         # Initialise the matrix to zero
-        self.load_zero()
+        for i in xrange(self.size):
+            self.__matrix.append(0)
         self.__input_matrix_values(mat)
 
     def __str__(self):
@@ -378,7 +380,8 @@ class Mat4:
         self.size = 16
 
         # Initialise the matrix to zero
-        self.load_zero()
+        for i in xrange(self.size):
+            self.__matrix.append(0)
         self.__input_matrix_values(mat)
 
     def __mul__(self, other):
