@@ -1,5 +1,6 @@
 import vector
 
+
 class Quat:
     def __init__(self):
         self.q0 = 0
@@ -25,14 +26,21 @@ class Quat:
     def __str__(self):
         return '(' + str(self.q0) + ', ' + str(self.q1) + ', ' + str(self.q2) + ', ' + str(self.q3) + ')'
 
-
     def __mul__(self, other):
         assert isinstance(other, (Quat, int, float, long)), 'Cannot call multiplication on non-Quaternion or non-number'
 
         if isinstance(other, Quat):
-
-
             pass
+            #can write this in matrix form
+
+            # p0, -p1, -p2, -p3
+            # p1, p0, -p3, p2
+            # p2, p3, p0, -p1
+            # p3, -p2, p1, p0
+
+            # multiply by
+
+            #q0, q1, q2, q3
 
         else:
             self.q0 *= other
