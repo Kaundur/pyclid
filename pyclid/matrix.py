@@ -10,7 +10,7 @@ class Mat2:
         |2, 3|
 
     """
-    def __init__(self, mat):
+    def __init__(self, mat=[]):
         assert isinstance(mat, list) and len(mat) <= 4, 'Requires input to be a list and len <= 4'
         self.__matrix = []
         self.x_size = 2
@@ -18,8 +18,7 @@ class Mat2:
         self.size = 9
 
         # Initialise the matrix to zero
-        for i in xrange(self.size):
-            self.__matrix.append(0)
+        self.load_zero()
         self.__input_matrix_values(mat)
 
     def __str__(self):
@@ -151,7 +150,7 @@ class Mat3:
 
     """
 
-    def __init__(self, mat):
+    def __init__(self, mat=[]):
         assert isinstance(mat, list) and len(mat) <= 9, 'Requires input to be a list and len <= 9'
         self.__matrix = []
         self.__x_size = 3
@@ -159,8 +158,7 @@ class Mat3:
         self.size = 9
 
         # Initialise the matrix to zero
-        for i in xrange(self.size):
-            self.__matrix.append(0)
+        self.load_zero()
         self.__input_matrix_values(mat)
 
     def __str__(self):
@@ -372,7 +370,7 @@ class Mat4:
 
     """
 
-    def __init__(self, mat):
+    def __init__(self, mat=[]):
         assert isinstance(mat, list) and len(mat) <= 16, 'Requires input to be a list and len <= 16'
         self.__matrix = []
         self.__x_size = 4
@@ -380,8 +378,7 @@ class Mat4:
         self.size = 16
 
         # Initialise the matrix to zero
-        for i in xrange(self.size):
-            self.__matrix.append(0)
+        self.load_zero()
         self.__input_matrix_values(mat)
 
     def __mul__(self, other):
