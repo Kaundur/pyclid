@@ -72,7 +72,7 @@ class Mat2:
         new_matrix = []
         for i in range(self.size):
             new_matrix.append(self.__matrix[i] + other.__matrix[i])
-        return Mat3(new_matrix)
+        return Mat2(new_matrix)
 
     def __sub__(self, other):
         assert isinstance(other, Mat2), 'Requires a Mat2'
@@ -80,7 +80,21 @@ class Mat2:
         new_matrix = []
         for i in range(self.size):
             new_matrix.append(self.__matrix[i] - other.__matrix[i])
-        return Mat3(new_matrix)
+        return Mat2(new_matrix)
+
+    def __eq__(self, other):
+        assert isinstance(other, Mat2), 'Requires a Mat2'
+
+        is_equal = True
+        for i in range(self.size):
+            if self.__matrix[i] != other.matrix[i]:
+                is_equal = False
+                break
+
+        return is_equal
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
     @property
     def matrix(self):
@@ -216,6 +230,20 @@ class Mat3:
         for i in range(self.size):
             new_matrix.append(self.__matrix[i] - other.__matrix[i])
         return Mat3(new_matrix)
+
+    def __eq__(self, other):
+        assert isinstance(other, Mat3), 'Requires a Mat3'
+
+        is_equal = True
+        for i in range(self.size):
+            if self.__matrix[i] != other.matrix[i]:
+                is_equal = False
+                break
+
+        return is_equal
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
     @property
     def matrix(self):
@@ -420,6 +448,19 @@ class Mat4:
             str_out += "|\n"
         return str_out
 
+    def __eq__(self, other):
+        assert isinstance(other, Mat4), 'Requires a Mat4'
+
+        is_equal = True
+        for i in range(self.size):
+            if self.__matrix[i] != other.matrix[i]:
+                is_equal = False
+                break
+
+        return is_equal
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
     @property
     def matrix(self):
