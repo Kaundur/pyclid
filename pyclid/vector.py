@@ -274,6 +274,43 @@ class Vec4:
             self.w /= mag
         return self
 
+
+    # def angle(self, other):
+    #     assert isinstance(other, Vec2), 'Requires a Vec2'
+    #     return math.acos(self.dot(other)/(self.magnitude() * other.magnitude()))
+
+    # def mid_point(self, other):
+    #     assert isinstance(other, Vec2), 'Requires a Vec2'
+    #     return Vec2((self.x + other.x)/2.0, (self.y + other.y)/2.0)
+
+
+    # def rotate(self, other):
+    #     assert isinstance(other, (int, float, long, matrix.Mat2)), 'Requires a rotation matrix or an angle'
+    #
+    #     if isinstance(other, matrix.Mat2):
+    #         om = other.matrix
+    #         vec_x = om[0]*self.x + om[1]*self.y
+    #         vec_y = om[2]*self.x + om[3]*self.y
+    #     else:
+    #         vec_x = math.cos(other)*self.x - math.sin(other)*self.y
+    #         vec_y = math.sin(other)*self.x + math.cos(other)*self.y
+    #
+    #     self.x = vec_x
+    #     self.y = vec_y
+    #     return self
+    #
+    # def set_rotation(self, other):
+    #     assert isinstance(other, (int, float, long)), 'Requires an int float or long'
+    #     vec_x = math.cos(other)*self.x - math.sin(other)*self.y
+    #     vec_y = math.sin(other)*self.x + math.cos(other)*self.y
+    #
+    #
+    #     vec_x = math.cos(other)
+    #     vec_y = math.sin(other)
+    #
+    #     self.x = vec_x
+    #     self.y = vec_y
+
     def zero(self):
         self.x = 0
         self.y = 0

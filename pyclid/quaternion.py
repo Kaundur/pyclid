@@ -29,6 +29,15 @@ class Quat:
 
         return self
 
+    def __sub__(self, other):
+        assert isinstance(other, Quat), 'Cannot call subtraction on a non-Quaternion'
+        self.q0 = self.q0 - other.q0
+        self.q1 = self.q1 - other.q1
+        self.q2 = self.q2 - other.q2
+        self.q3 = self.q3 - other.q3
+
+        return self
+
     def __str__(self):
         return '(' + str(self.q0) + ', ' + str(self.q1) + ', ' + str(self.q2) + ', ' + str(self.q3) + ')'
 
@@ -67,3 +76,22 @@ class Quat:
 
     def __abs__(self):
         return math.sqrt(self.q0**2 + self.q1**2 + self.q2**2 + self.q3**2)
+
+    def magnitude(self):
+        return self.__abs__()
+
+    def norm(self):
+        return self.__abs__()
+
+    def unit(self):
+        mag = self.norm()
+        if mag:
+            self.q0 /= mag
+            self.q1 /= mag
+            self.q2 /= mag
+            self.q3 /= mag
+        return self
+
+    # Consider rename - normalize is similar to norm, but returns a unit quaternion
+    def normalize(self):
+        return self.unit()
