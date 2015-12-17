@@ -1,3 +1,5 @@
+import math
+
 import vector
 import matrix
 
@@ -62,3 +64,6 @@ class Quat:
 
     def __rmul__(self, other):
         return self.__mul__(other)
+
+    def __abs__(self):
+        return math.sqrt(self.q0**2 + self.q1**2 + self.q2**2 + self.q3**2)
