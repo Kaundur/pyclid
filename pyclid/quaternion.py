@@ -15,6 +15,9 @@ class Quat:
             return True
         return False
 
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
     def __add__(self, other):
         assert isinstance(other, Quat), 'Cannot call addition on a non-Quaternion'
         self.q0 = self.q0 + other.q0
@@ -50,7 +53,6 @@ class Quat:
 
             quat = mat*vec
             return Quat(quat.x, quat.y, quat.z, quat.w)
-
         else:
             self.q0 *= other
             self.q1 *= other
