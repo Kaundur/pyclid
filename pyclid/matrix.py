@@ -1,6 +1,6 @@
 import math
 
-import vector
+import pyclid.vector
 
 
 class Mat2:
@@ -18,7 +18,7 @@ class Mat2:
         self.size = 4
 
         # Initialise the matrix to zero
-        for i in xrange(self.size):
+        for i in range(self.size):
             self.__matrix.append(0)
         self.__input_matrix_values(mat)
 
@@ -38,7 +38,7 @@ class Mat2:
         return str_out
 
     def __mul__(self, other):
-        assert isinstance(other, (int, float, long, Mat2, vector.Vec2)), 'Requires a int, float, long, Mat2 or Vec2'
+        assert isinstance(other, (int, float, Mat2, pyclid.vector.Vec2)), 'Requires a int, float, Mat2 or Vec2'
         if isinstance(other, Mat2):
             new_matrix = []
             sm = self.__matrix
@@ -51,10 +51,10 @@ class Mat2:
             new_matrix.append(sm[2]*om[1] + sm[3]*om[3])
 
             return Mat2(new_matrix)
-        if isinstance(other, vector.Vec2):
+        if isinstance(other, pyclid.vector.Vec2):
             x = self.__matrix[0]*other.x + self.__matrix[1]*other.y
             y = self.__matrix[2]*other.x + self.__matrix[3]*other.y
-            return vector.Vec2(x, y)
+            return pyclid.vector.Vec2(x, y)
         else:
             self.__matrix = [i*other for i in self.__matrix]
             return self
@@ -63,7 +63,7 @@ class Mat2:
         return self.__mul__(other)
 
     def __div__(self, other):
-        assert isinstance(other, (int, float, long)), 'Requires a int, float or long'
+        assert isinstance(other, (int, float)), 'Requires a int, float'
         self.__matrix = [i/other for i in self.__matrix]
         return self
 
@@ -159,7 +159,7 @@ class Mat3:
         self.size = 9
 
         # Initialise the matrix to zero
-        for i in xrange(self.size):
+        for i in range(self.size):
             self.__matrix.append(0)
         self.__input_matrix_values(mat)
 
@@ -179,7 +179,7 @@ class Mat3:
         return str_out
 
     def __mul__(self, other):
-        assert isinstance(other, (int, float, long, Mat3, vector.Vec3)), 'Requires a int, float, long, Vec3, Mat3'
+        assert isinstance(other, (int, float, Mat3, pyclid.vector.Vec3)), 'Requires a int, float, Vec3, Mat3'
         if isinstance(other, Mat3):
             new_matrix = []
             sm = self.__matrix
@@ -198,12 +198,12 @@ class Mat3:
             new_matrix.append(sm[6]*om[2] + sm[7]*om[5] + sm[8]*om[8])
 
             return Mat3(new_matrix)
-        if isinstance(other, vector.Vec3):
+        if isinstance(other, pyclid.vector.Vec3):
             x = self.__matrix[0]*other.x + self.__matrix[1]*other.y + self.__matrix[2]*other.z
             y = self.__matrix[3]*other.x + self.__matrix[4]*other.y + self.__matrix[5]*other.z
             z = self.__matrix[6]*other.x + self.__matrix[7]*other.y + self.__matrix[8]*other.z
 
-            return vector.Vec3(x, y, z)
+            return pyclid.vector.Vec3(x, y, z)
         else:
             self.__matrix = [i*other for i in self.__matrix]
             return self
@@ -212,7 +212,7 @@ class Mat3:
         return self.__mul__(other)
 
     def __div__(self, other):
-        assert isinstance(other, (int, float, long)), 'Requires a int, float or long'
+        assert isinstance(other, (int, float)), 'Requires a int or float'
         self.__matrix = [i/other for i in self.__matrix]
         return self
 
@@ -380,12 +380,12 @@ class Mat4:
         self.size = 16
 
         # Initialise the matrix to zero
-        for i in xrange(self.size):
+        for i in range(self.size):
             self.__matrix.append(0)
         self.__input_matrix_values(mat)
 
     def __mul__(self, other):
-        assert isinstance(other, (int, float, long, Mat4, vector.Vec4)), 'Requires an int, float, long, Vec4 or Mat4'
+        assert isinstance(other, (int, float, Mat4, pyclid.vector.Vec4)), 'Requires an int, float, long, Vec4 or Mat4'
         if isinstance(other, Mat4):
             new_matrix = []
             sm = self.__matrix
@@ -418,14 +418,14 @@ class Mat4:
 
             return Mat4(new_matrix)
 
-        elif isinstance(other, vector.Vec4):
+        elif isinstance(other, pyclid.vector.Vec4):
             sm = self.__matrix
             v = [sm[0]*other.x  + sm[1]*other.y  + sm[2]*other.z  + sm[3]*other.w,
                  sm[4]*other.x  + sm[5]*other.y  + sm[6]*other.z  + sm[7]*other.w,
                  sm[8]*other.x  + sm[9]*other.y  + sm[10]*other.z + sm[11]*other.w,
                  sm[12]*other.x + sm[13]*other.y + sm[14]*other.z + sm[15]*other.w]
 
-            return vector.Vec4(v[0], v[1], v[2], v[3])
+            return pyclid.vector.Vec4(v[0], v[1], v[2], v[3])
         else:
             self.__matrix = [i*other for i in self.__matrix]
             return self

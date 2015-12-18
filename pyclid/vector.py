@@ -1,6 +1,7 @@
 import math
 
-import matrix
+#import pyclid.matrix as matrix
+import pyclid.matrix
 
 
 class Vec2:
@@ -26,7 +27,7 @@ class Vec2:
         return Vec2(self.x - other.x, self.y - other.y)
 
     def __mul__(self, other):
-        assert isinstance(other, (int, float, long)), 'Requires a int, float or long'
+        assert isinstance(other, (int, float)), 'Requires a int, float'
         self.x *= other
         self.y *= other
         return self
@@ -35,7 +36,7 @@ class Vec2:
         return self.__mul__(other)
 
     def __div__(self, other):
-        assert isinstance(other, (int, float, long)), 'Requires a int, float or long'
+        assert isinstance(other, (int, float)), 'Requires a int, float'
         self.x /= other
         self.y /= other
         return self
@@ -78,9 +79,9 @@ class Vec2:
         return Vec2((self.x + other.x)/2.0, (self.y + other.y)/2.0)
 
     def rotate(self, other):
-        assert isinstance(other, (int, float, long, matrix.Mat2)), 'Requires a rotation matrix or an angle'
+        assert isinstance(other, (int, float, pyclid.matrix.Mat2)), 'Requires a rotation matrix or an angle'
 
-        if isinstance(other, matrix.Mat2):
+        if isinstance(other, pyclid.matrix.Mat2):
             om = other.matrix
             vec_x = om[0]*self.x + om[1]*self.y
             vec_y = om[2]*self.x + om[3]*self.y
@@ -93,7 +94,7 @@ class Vec2:
         return self
 
     def set_rotation(self, other):
-        assert isinstance(other, (int, float, long)), 'Requires an int float or long'
+        assert isinstance(other, (int, float)), 'Requires an int float'
         vec_x = math.cos(other)*self.x - math.sin(other)*self.y
         vec_y = math.sin(other)*self.x + math.cos(other)*self.y
 
@@ -135,7 +136,7 @@ class Vec3:
         return Vec3(self.x - other.x, self.y - other.y, self.z - other.z)
 
     def __mul__(self, other):
-        assert isinstance(other, (int, float, long)), 'Requires a int, float or long'
+        assert isinstance(other, (int, float)), 'Requires a int, float'
         self.x *= other
         self.y *= other
         self.z *= other
@@ -145,7 +146,7 @@ class Vec3:
         return self.__rmul__(other)
 
     def __div__(self, other):
-        assert isinstance(other, (int, float, long)), 'Requires a int, float or long'
+        assert isinstance(other, (int, float)), 'Requires a int, float'
         self.x /= other
         self.y /= other
         self.z /= other
@@ -233,7 +234,7 @@ class Vec4:
         return Vec4(self.x - other.x, self.y - other.y, self.z - other.z, self.w - other.z)
 
     def __mul__(self, other):
-        assert isinstance(other, (int, float, long)), 'Requires a int, float or long'
+        assert isinstance(other, (int, float)), 'Requires a int, float'
         self.x *= other
         self.y *= other
         self.z *= other
@@ -244,7 +245,7 @@ class Vec4:
         return self.__mul__(other)
 
     def __div__(self, other):
-        assert isinstance(other, (int, float, long)), 'Requires a int, float or long'
+        assert isinstance(other, (int, float)), 'Requires a int, float'
         self.x /= other
         self.y /= other
         self.z /= other
