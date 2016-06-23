@@ -13,7 +13,7 @@ class Vec2:
         return 2
 
     def __str__(self):
-        return '[' + str(self.x) + ', ' + str(self.y) + ']'
+        return '<' + str(self.x) + ', ' + str(self.y) + '>'
 
     def __abs__(self):
         return math.sqrt(self.x**2 + self.y**2)
@@ -122,7 +122,7 @@ class Vec3:
         return 3
 
     def __str__(self):
-        return '[' + str(self.x) + ', ' + str(self.y) + ', ' + str(self.z) + ']'
+        return '<' + str(self.x) + ', ' + str(self.y) + ', ' + str(self.z) + '>'
 
     def __abs__(self):
         return math.sqrt(self.x**2 + self.y**2 + self.z**2)
@@ -220,7 +220,7 @@ class Vec4:
         return 4
 
     def __str__(self):
-        return '[' + str(self.x) + ', ' + str(self.y) + ', ' + str(self.z) + ', ' + str(self.w) + ']'
+        return '<' + str(self.x) + ', ' + str(self.y) + ', ' + str(self.z) + ', ' + str(self.w) + '>'
 
     def __abs__(self):
         return math.sqrt(self.x**2 + self.y**2 + self.z**2 + self.w**2)
