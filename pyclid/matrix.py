@@ -37,6 +37,9 @@ class Mat2:
             str_out += "|\n"
         return str_out
 
+    def __repr__(self):
+        return self.__str__()
+
     def __mul__(self, other):
         assert isinstance(other, (int, float, Mat2, pyclid.vector.Vec2)), 'Requires a int, float, Mat2 or Vec2'
         if isinstance(other, Mat2):
@@ -177,6 +180,9 @@ class Mat3:
 
             str_out += "|\n"
         return str_out
+
+    def __repr__(self):
+        return self.__str__()
 
     def __mul__(self, other):
         assert isinstance(other, (int, float, Mat3, pyclid.vector.Vec3)), 'Requires a int, float, Vec3, Mat3'
@@ -447,6 +453,9 @@ class Mat4:
 
             str_out += "|\n"
         return str_out
+
+    def __repr__(self):
+        return self.__str__()
 
     def __eq__(self, other):
         assert isinstance(other, Mat4), 'Requires a Mat4'

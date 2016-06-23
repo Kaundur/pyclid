@@ -15,6 +15,9 @@ class Vec2:
     def __str__(self):
         return '<' + str(self.x) + ', ' + str(self.y) + '>'
 
+    def __repr__(self):
+        return self.__str__()
+
     def __abs__(self):
         return math.sqrt(self.x**2 + self.y**2)
 
@@ -124,6 +127,9 @@ class Vec3:
     def __str__(self):
         return '<' + str(self.x) + ', ' + str(self.y) + ', ' + str(self.z) + '>'
 
+    def __repr__(self):
+        return self.__str__()
+
     def __abs__(self):
         return math.sqrt(self.x**2 + self.y**2 + self.z**2)
 
@@ -221,6 +227,9 @@ class Vec4:
 
     def __str__(self):
         return '<' + str(self.x) + ', ' + str(self.y) + ', ' + str(self.z) + ', ' + str(self.w) + '>'
+
+    def __repr__(self):
+        return self.__str__()
 
     def __abs__(self):
         return math.sqrt(self.x**2 + self.y**2 + self.z**2 + self.w**2)
