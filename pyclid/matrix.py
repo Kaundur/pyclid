@@ -365,6 +365,7 @@ class Mat3:
         mat.set_value(-sin_angle, 1)
         mat.set_value(sin_angle, 3)
         mat.set_value(cos_angle, 4)
+        print mat
         return mat
 
 
@@ -580,5 +581,3 @@ class Mat4:
         mat.set_value(cos_angle, 5)
         mat.set_value(0, 15)
         return mat
-
-
