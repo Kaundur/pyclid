@@ -38,7 +38,7 @@ Vec4 (x, y, z, w)
 
 
 ## Initalisation
-Calling the vector with not parameters will initalise a vector to zero
+Calling the vector with out parameters will initalise a vector to zero
 
 ``` python
 >>> import pyclid
