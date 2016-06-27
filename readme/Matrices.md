@@ -19,7 +19,29 @@ Currently a large number of functions are not implemented, or are only implement
 
 
 # Functions
-1. [Initalisation](#Initalisation)
+1. [Initalisation](#initalisation)
+2. [Standard](sStandard)
+    * [Addition](#addition)
+    * [Subtraction](#subtraction)
+    * [Multiplication](#multiplication)
+    * [Division](#division)
+3. [Comparison](#Comparison)
+    * [Equal](#Equal)
+    * [Not Equal](#not-equal)
+4. [Extra functionality](#Extra Functionality)
+    * [Matrix](#matrix)
+    * [Load Zero](#load-zero)
+    * [Load Identity](#load-identity)
+    * [Transpose](#transpose)
+    * [Rotate](#rotate)
+5. [Mat3 Only Functions](#mat3-only-functions)
+    * [Set Value](#set-value)
+    * [Translate](#translate)
+    * [Scale](#scale)
+    * [Share](#share)
+    * [Convert 2D](#conver-2d)
+6. [Mat4 Only Functions](#mat4-only-functions)
+    * [Rotate](#rotate)
 
 ## Initalisation
 Calling the matrix with out parameters will initalise a zero matrix
@@ -49,8 +71,8 @@ Array parameters can be passed in as an array (subject to change)
 | 0 1 |
 | 2 3 |
 ```
-
-## Addition
+## Standard
+### Addition
 Addition is applied on an element by element basis
 ```python
 >>> a = pyclid.Mat2([1, 1, 1, 1])
@@ -60,7 +82,7 @@ Addition is applied on an element by element basis
 | 4 5 |
 ```
 
-## Subtraction
+### Subtraction
 ```python
 >>> a = pyclid.Mat2([1, 2, 3, 4])
 >>> b = pyclid.Mat2([1, 1, 1, 1])
@@ -68,7 +90,7 @@ Addition is applied on an element by element basis
 | 0 1 |
 | 2 3 |
 ```
-## Multiplication
+### Multiplication
 This can be used with a number, Vec2 or a matrix of the same size.
 ```python
 >>> a = pyclid.Mat2([1, 2, 3, 4])
@@ -92,7 +114,7 @@ Multiplication by a matrix must use matrices of the same size
 | 28 40 |
 ```
 
-## Division
+### Division
 Division can only be used with a number
 
 ```python
@@ -178,8 +200,9 @@ Uses the angle passed in to generate a rotation matrix, which is multiplied to t
 ```
 
 
-## Mat3 only functions (These functions need to be updated to work on Mat2 and Mat4)
-### set_value
+## Mat3 only functions
+These functions need to be updated to work on Mat2 and Mat4
+### Set Value
 Sets the value of an element within the matrix. element can be indexed with either by 1D or 2D [x, y].
 Takes parameters (value, index)
 ``` python
@@ -217,7 +240,7 @@ Translates a matrix by parameters (x, y)
 |  7  8 16 |
 ```
 
-### scale
+### Scale
 Scales a matrix by parameters (x, y)
 ``` python
 >>> a = pyclid.Mat3([1, 2, 3, 4, 5, 6, 7, 8, 9])
@@ -226,7 +249,7 @@ Scales a matrix by parameters (x, y)
 |  8.0  5.0    6 |
 | 14.0  8.0    9 |
 ```
-### share
+### Share
 Shares a matrix by parameters (x, y)
 ``` python
 >>> a = pyclid.Mat3([1, 2, 3, 4, 5, 6, 7, 8, 9])
@@ -236,7 +259,7 @@ Shares a matrix by parameters (x, y)
 | 15.0 22.0    9 |
 ```
 
-### convert_2d
+### Convert 2D
 This requires parameters (x, y) and returns the index of the element in 1D for the current matrix
 ```python
 >>> a = pyclid.Mat3([1, 2, 3, 4, 5, 6, 7, 8, 9])
@@ -244,7 +267,7 @@ This requires parameters (x, y) and returns the index of the element in 1D for t
 3
 ```
 
-## Mat4 Only
+## Mat4 Only Functions
 ### Rotate
 
 The next set of functions apply only to Mat4 (Should also apply to Mat3). These apply rotations about the Euler angles x, y and z.
