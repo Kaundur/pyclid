@@ -39,7 +39,10 @@ class Quat:
         return self
 
     def __str__(self):
-        return '(' + str(self.q0) + ', ' + str(self.q1) + ', ' + str(self.q2) + ', ' + str(self.q3) + ')'
+        return '<' + str(self.q0) + ', ' + str(self.q1) + ', ' + str(self.q2) + ', ' + str(self.q3) + '>'
+
+    def __repr__(self):
+        return self.__str__()
 
     def __mul__(self, other):
         assert isinstance(other, (Quat, int, float)), 'Cannot call multiplication on non-Quaternion or non-number'
